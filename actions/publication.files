@@ -1,0 +1,10 @@
+actions/target.sh tools/target.sh 0755
+setup/dispatch.sh tools/dispatch.sh 0755
+setup/common.sh tools/setup/common.sh 0644
+setup/access.sh tools/setup/access.sh 0755
+setup/host.sh tools/setup/host.sh 0755
+setup/models.sh tools/setup/models.sh 0755
+setup/gguf.py tools/setup/gguf.py 0755
+setup/llamacpp.sh tools/setup/llamacpp.sh 0755
+setup/nvidia.sh tools/setup/nvidia.sh 0755
+setup/smoke.llamacpp.sh tools/setup/smoke.llamacpp.sh 0755
