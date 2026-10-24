@@ -6,7 +6,7 @@ on:
       version:
         description: Bare semantic version
         required: true
-        default: "0.0.1"
+        default: "0.0.2"
         type: string
       source_sha:
         description: Exact 40-character commit SHA at main
@@ -27,27 +27,78 @@ permissions:
   contents: write
 
 concurrency:
-  group: release-${{ inputs.version }}
+  group: ktransformers-pages
   cancel-in-progress: false
 
 jobs:
   release:
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
-
+    timeout-minutes: 15
     steps:
       - name: Checkout exact candidate
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
           ref: ${{ inputs.source_sha }}
-
-      - name: Create or publish reviewed release
+      - name: Validate candidate
+        env:
+          SOURCE_SHA: ${{ inputs.source_sha }}
+        run: bash actions/validate.sh
+      - name: Prepare draft or publication
         env:
           GH_TOKEN: ${{ github.token }}
           RELEASE_CONFIRMATION: ${{ inputs.confirmation }}
           RELEASE_MODE: ${{ inputs.mode }}
+          RELEASE_PHASE: prepare
           RELEASE_VERSION: ${{ inputs.version }}
           SOURCE_SHA: ${{ inputs.source_sha }}
         run: bash actions/release.sh
-
+      - name: Build immutable release closure
+        if: inputs.mode == 'publish'
+        env:
+          PUBLICATION_CHANNEL: release
+          PUBLISH_DIR: release-static
+          RELEASE_VERSION: ${{ inputs.version }}
+          SOURCE_SHA: ${{ inputs.source_sha }}
+        run: bash actions/www.pages.sh
+      - name: Checkout publication branch
+        if: inputs.mode == 'publish'
+        uses: actions/checkout@v6
+        with:
+          ref: www
+          path: published
+      - name: Publish immutable release closure
+        if: inputs.mode == 'publish'
+        env:
+          VERSION: ${{ inputs.version }}
+          SOURCE_SHA: ${{ inputs.source_sha }}
+        run: |
+          destination="published/releases/${VERSION}"
+          if [[ -e "${destination}" ]]; then
+            python3 - "${destination}/source.json" "${SOURCE_SHA}" "${VERSION}" <<'PY'
+          import json, sys
+          with open(sys.argv[1], encoding="utf-8") as handle:
+              record = json.load(handle)
+          if record.get("source_sha") != sys.argv[2] or record.get("release_version") != sys.argv[3]:
+              raise SystemExit("immutable release path already contains different content")
+          PY
+          else
+            mkdir -p "${destination}"
+            cp -R release-static/. "${destination}/"
+            cd published
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add --all "releases/${VERSION}"
+            git commit -m "publish immutable release ${VERSION}"
+            git push origin HEAD:www
+          fi
+      - name: Publish reviewed GitHub release
+        if: inputs.mode == 'publish'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_CONFIRMATION: ${{ inputs.confirmation }}
+          RELEASE_MODE: publish
+          RELEASE_PHASE: finalize
+          RELEASE_VERSION: ${{ inputs.version }}
+          SOURCE_SHA: ${{ inputs.source_sha }}
+        run: bash actions/release.sh
