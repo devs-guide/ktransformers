@@ -11,21 +11,24 @@
     <a href="/ktransformers/">Overview</a>
     <a href="/ktransformers/features/">Features</a>
     <a href="/ktransformers/models/">Models</a>
-    <a href="/ktransformers/releases/0.0.1/">Release 0.0.1</a>
+    <a href="/ktransformers/source/releases/0.0.1.md">Release 0.0.1</a>
   </nav>
-  <span class="status">Setup release</span>
+  <span class="status">Human-smoke candidate</span>
   <h1>Hybrid inference, deliberately staged.</h1>
   <p>Standalone tooling for pinned llama.cpp and KTransformers/SGLang-KT
-  profiles on CPU, Intel PMem Memory Mode, and dual-GPU hosts.</p>
+  profiles on AVX-512/VNNI CPUs with optional PMem-aware and NVIDIA paths.</p>
   <div class="card">
     <h2>Current state</h2>
-    <p><code>0.0.1</code> establishes the repository and publication workflow.
-    Runtime and model execution features are planned for <code>0.1.0</code>.</p>
+    <p><code>0.0.1</code> established the repository. The <code>0.0.2</code>
+    candidate publishes exact-commit target runners for human smoke; the full
+    dual-runtime/MoE milestone remains <code>0.1.0</code>.</p>
   </div>
   <h2>Model boundary</h2>
   <p>This project does not distribute or download models. Operators provision
   models outside the checkout; future commands may inspect an existing local
   path read-only.</p>
+  <h2>Compute contract</h2>
+  <p>AVX-512 and AVX-512 VNNI are the only universal compute gates. PMem,
+  reserves, and NVIDIA capabilities are discovered or operator-selected.</p>
 </main></body>
 </html>
-

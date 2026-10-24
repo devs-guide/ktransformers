@@ -1,5 +1,7 @@
 {
-  "release_version": "0.0.1",
+  "channel": "current",
+  "release_version": null,
   "repository": "devs-guide/ktransformers",
-  "source_sha": "f749c3b0c098abd4731da5141722a93812ac1395"
+  "schema_version": 1,
+  "source_sha": "dd2341cffca303936d1ddbdbefca3d7713aec517"
 }

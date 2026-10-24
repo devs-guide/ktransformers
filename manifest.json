@@ -1,0 +1,69 @@
+{
+  "channel": "current",
+  "files": [
+    {
+      "mode": "0755",
+      "path": "tools/target.sh",
+      "sha256": "a12ea5937bbb508403c600c3d203c4d9c166f53e9fa94f84e0ae9c28ab5926b0",
+      "size_bytes": 1125
+    },
+    {
+      "mode": "0755",
+      "path": "tools/dispatch.sh",
+      "sha256": "430770bb5704bb78cbfa326526e8a3032e1be9428b9b0f4cd6ab63baf0d4dda8",
+      "size_bytes": 2457
+    },
+    {
+      "mode": "0644",
+      "path": "tools/setup/common.sh",
+      "sha256": "0f9b7c8d8284db62ee16b9ef81946bc14148d764be79e934850a4c10612e86ab",
+      "size_bytes": 1024
+    },
+    {
+      "mode": "0755",
+      "path": "tools/setup/access.sh",
+      "sha256": "154c6ab4452d32dfe1a9348c04c662d2c662294fad455d68ba2d16c2d27dd2e4",
+      "size_bytes": 5030
+    },
+    {
+      "mode": "0755",
+      "path": "tools/setup/host.sh",
+      "sha256": "5643dcecc94f0fc094ffdc7c2ad5e6a542fbc6c65e3eb7f2832b0811150ebd5b",
+      "size_bytes": 4819
+    },
+    {
+      "mode": "0755",
+      "path": "tools/setup/models.sh",
+      "sha256": "c24e55766bc2f833eb713553d520be11cc68d95cd87a9e0dcec3bb95e6f9f386",
+      "size_bytes": 1723
+    },
+    {
+      "mode": "0755",
+      "path": "tools/setup/gguf.py",
+      "sha256": "bc70067409bc98f5843e155876520324e02101ec221db60ba006672d3c1fb078",
+      "size_bytes": 6793
+    },
+    {
+      "mode": "0755",
+      "path": "tools/setup/llamacpp.sh",
+      "sha256": "6bd2b87cf85eda7f13afe642a6bcbec9fadc4ecf7df94c2094f6df28397e42a3",
+      "size_bytes": 7506
+    },
+    {
+      "mode": "0755",
+      "path": "tools/setup/nvidia.sh",
+      "sha256": "6ce428df2a3ccd128d49104f71405436cd4703b54fe43be017fa21a5cf3065e1",
+      "size_bytes": 6082
+    },
+    {
+      "mode": "0755",
+      "path": "tools/setup/smoke.llamacpp.sh",
+      "sha256": "497f4516d3851260f858f9ec26197a6638286194e82e76ac1e4b460aa40cce93",
+      "size_bytes": 12493
+    }
+  ],
+  "release_version": null,
+  "repository": "devs-guide/ktransformers",
+  "schema_version": 1,
+  "source_sha": "dd2341cffca303936d1ddbdbefca3d7713aec517"
+}
