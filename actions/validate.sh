@@ -34,7 +34,7 @@ fi
 if git grep -n -E 'RTX[ -]?3090|sm_?86|36 physical cores|96 GiB|4 GiB' -- . ':!actions/validate.sh' >/dev/null; then
   fail 'observed deployment hardware leaked into project defaults'
 fi
-if git grep -n -E '(wget|curl).*(huggingface\.co|\.gguf|\.safetensors)' -- setup actions ':!setup/dispatch.sh' >/dev/null; then
+if git grep -n -E '(wget|curl).*(huggingface\.co|\.gguf|\.safetensors)' -- setup actions ':!setup/dispatch.sh' ':!actions/validate.sh' >/dev/null; then
   fail 'model acquisition behavior is forbidden'
 fi
 
