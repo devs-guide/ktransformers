@@ -1,0 +1,53 @@
+name: Create reviewed source release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Bare semantic version
+        required: true
+        default: "0.0.1"
+        type: string
+      source_sha:
+        description: Exact 40-character commit SHA at main
+        required: true
+        type: string
+      mode:
+        description: Create/update a draft or publish the existing draft
+        required: true
+        default: draft
+        type: choice
+        options: [draft, publish]
+      confirmation:
+        description: Type release VERSION@SHA MODE
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ inputs.version }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout exact candidate
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          ref: ${{ inputs.source_sha }}
+
+      - name: Create or publish reviewed release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_CONFIRMATION: ${{ inputs.confirmation }}
+          RELEASE_MODE: ${{ inputs.mode }}
+          RELEASE_VERSION: ${{ inputs.version }}
+          SOURCE_SHA: ${{ inputs.source_sha }}
+        run: bash actions/release.sh
+

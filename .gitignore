@@ -1,0 +1,44 @@
+# Local prompt workspace (separate private repository)
+/prompt
+/prompts
+
+# Generated publication output
+/static
+
+# Local runtime/build state
+/.cache
+/.venv
+/build
+/dist
+/logs
+/results
+*.log
+.env
+.env.*
+!.env.example
+
+# Models are always operator-provided and external to this repository
+/model
+/models
+*.gguf
+*.safetensors
+*.ckpt
+*.onnx
+*.pt
+*.pth
+*.tflite
+*.xet
+tokenizer.model
+
+# Hugging Face caches
+**/.cache/huggingface/
+**/huggingface/hub/
+
+# Editor and operating-system files
+.DS_Store
+._*
+.idea/
+.vscode/
+__pycache__/
+*.py[cod]
+
